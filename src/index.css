@@ -8,35 +8,58 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* HymnRO Celestial Fantasy Theme */
+    --background: 230 35% 7%;
+    --foreground: 210 60% 95%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 230 25% 12%;
+    --card-foreground: 210 60% 95%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 230 25% 12%;
+    --popover-foreground: 210 60% 95%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 45 96% 65%;
+    --primary-foreground: 230 35% 7%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 195 100% 85%;
+    --secondary-foreground: 230 35% 7%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 230 15% 20%;
+    --muted-foreground: 210 25% 70%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 195 100% 85%;
+    --accent-foreground: 230 35% 7%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 230 20% 25%;
+    --input: 230 20% 25%;
+    --ring: 45 96% 65%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    /* Custom HymnRO Colors */
+    --hymn-navy: 230 35% 7%;
+    --hymn-silver: 210 15% 85%;
+    --hymn-cyan: 195 100% 85%;
+    --hymn-gold: 45 96% 65%;
+    --hymn-dark-blue: 230 25% 12%;
+    --hymn-glow-gold: 45 100% 70%;
+    
+    /* Gradients */
+    --gradient-celestial: linear-gradient(135deg, hsl(230 35% 7%), hsl(230 45% 15%), hsl(195 80% 25%));
+    --gradient-gold: linear-gradient(135deg, hsl(45 96% 65%), hsl(45 100% 70%));
+    --gradient-hero: linear-gradient(135deg, hsl(230 35% 7%) 0%, hsl(230 45% 15%) 50%, hsl(195 30% 20%) 100%);
+    
+    /* Shadows & Glows */
+    --shadow-glow: 0 0 30px hsl(45 96% 65% / 0.3);
+    --shadow-cyan-glow: 0 0 20px hsl(195 100% 85% / 0.4);
+    --shadow-card: 0 10px 30px hsl(230 35% 7% / 0.5);
+    
+    /* Animations */
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-glow: all 0.3s ease-in-out;
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +123,92 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground overflow-x-hidden;
+    background: var(--gradient-celestial);
+    background-attachment: fixed;
+  }
+
+  /* Custom animations */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    25% { transform: translateY(-10px) rotate(1deg); }
+    50% { transform: translateY(-5px) rotate(-1deg); }
+    75% { transform: translateY(-15px) rotate(1deg); }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: var(--shadow-glow); }
+    50% { box-shadow: var(--shadow-glow), 0 0 60px hsl(45 96% 65% / 0.5); }
+  }
+
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .animate-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .animate-shimmer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, hsl(195 100% 85% / 0.3), transparent);
+    animation: shimmer 2s infinite;
+  }
+
+  /* Navigation styles */
+  .nav-item {
+    position: relative;
+    color: hsl(var(--hymn-silver));
+    transition: var(--transition-smooth);
+  }
+
+  .nav-item:hover {
+    color: hsl(var(--hymn-cyan));
+    transform: translateY(-1px);
+  }
+
+  .nav-item::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, hsl(var(--hymn-gold)), hsl(var(--hymn-cyan)));
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+  }
+
+  .nav-item:hover::before {
+    width: 100%;
+  }
+
+  .nav-item-special {
+    position: relative;
+    background: linear-gradient(135deg, hsl(var(--hymn-gold) / 0.1), hsl(var(--hymn-cyan) / 0.1));
+    border: 1px solid hsl(var(--hymn-gold) / 0.3);
+    color: hsl(var(--hymn-gold));
+    transition: var(--transition-glow);
+  }
+
+  .nav-item-special:hover {
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-2px);
+    border-color: hsl(var(--hymn-gold));
   }
 }

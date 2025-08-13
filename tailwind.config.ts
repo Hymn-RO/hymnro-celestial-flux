@@ -61,7 +61,30 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				hymn: {
+					navy: 'hsl(var(--hymn-navy))',
+					silver: 'hsl(var(--hymn-silver))',
+					cyan: 'hsl(var(--hymn-cyan))',
+					gold: 'hsl(var(--hymn-gold))',
+					'dark-blue': 'hsl(var(--hymn-dark-blue))',
+					'glow-gold': 'hsl(var(--hymn-glow-gold))'
 				}
+			},
+			backgroundImage: {
+				'gradient-celestial': 'var(--gradient-celestial)',
+				'gradient-gold': 'var(--gradient-gold)',
+				'gradient-hero': 'var(--gradient-hero)'
+			},
+			boxShadow: {
+				'glow': 'var(--shadow-glow)',
+				'cyan-glow': 'var(--shadow-cyan-glow)',
+				'card-hymn': 'var(--shadow-card)'
+			},
+			animation: {
+				'float': 'float 6s ease-in-out infinite',
+				'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+				'shimmer': 'shimmer 2s infinite'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
