@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Crown, Download, Users, Trophy, DollarSign, MessageSquare, LogIn } from "lucide-react";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 const Navigation = () => {
   return (
@@ -52,6 +53,7 @@ const Navigation = () => {
 
           {/* Login Section */}
           <div className="flex items-center space-x-3">
+            <ThemeSwitcher />
             <Button variant="hero" size="sm" className="hidden md:flex items-center">
               <LogIn className="w-4 h-4 mr-2" />
               Login
