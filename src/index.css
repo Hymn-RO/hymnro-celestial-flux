@@ -10,52 +10,52 @@ All colors MUST be HSL.
   :root {
     /* HymnRO Light Celestial Theme (Day Mode) */
     --background: 45 50% 95%;
-    --foreground: 230 20% 15%;
+    --foreground: 230 50% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 230 20% 15%;
+    --card-foreground: 230 50% 20%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 230 20% 15%;
+    --popover-foreground: 230 50% 20%;
 
-    --primary: 45 95% 55%;
+    --primary: 45 95% 45%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 320 30% 90%;
-    --secondary-foreground: 230 20% 15%;
+    --secondary: 230 30% 85%;
+    --secondary-foreground: 230 50% 25%;
 
-    --muted: 45 20% 90%;
-    --muted-foreground: 230 15% 45%;
+    --muted: 230 20% 90%;
+    --muted-foreground: 230 40% 35%;
 
-    --accent: 320 30% 90%;
-    --accent-foreground: 230 20% 15%;
+    --accent: 320 40% 70%;
+    --accent-foreground: 230 50% 25%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 45 30% 85%;
-    --input: 45 30% 85%;
-    --ring: 45 95% 55%;
+    --border: 230 30% 80%;
+    --input: 230 30% 85%;
+    --ring: 45 95% 45%;
 
     --radius: 0.75rem;
 
     /* Custom HymnRO Light Colors */
-    --hymn-navy: 230 50% 85%;
-    --hymn-silver: 0 0% 95%;
-    --hymn-cyan: 320 25% 85%;
-    --hymn-gold: 45 95% 55%;
-    --hymn-dark-blue: 0 0% 100%;
-    --hymn-glow-gold: 45 100% 60%;
+    --hymn-navy: 230 50% 25%;
+    --hymn-silver: 230 20% 35%;
+    --hymn-cyan: 320 60% 50%;
+    --hymn-gold: 45 95% 45%;
+    --hymn-dark-blue: 230 40% 30%;
+    --hymn-glow-gold: 45 100% 40%;
     
     /* Light Gradients */
     --gradient-celestial: linear-gradient(135deg, hsl(45 50% 95%), hsl(320 20% 92%), hsl(45 40% 88%));
-    --gradient-gold: linear-gradient(135deg, hsl(45 95% 55%), hsl(45 100% 60%));
+    --gradient-gold: linear-gradient(135deg, hsl(45 95% 45%), hsl(45 100% 50%));
     --gradient-hero: linear-gradient(135deg, hsl(45 50% 95%) 0%, hsl(320 25% 90%) 50%, hsl(45 35% 85%) 100%);
     
     /* Light Shadows & Glows */
-    --shadow-glow: 0 0 30px hsl(45 95% 55% / 0.4);
-    --shadow-cyan-glow: 0 0 20px hsl(320 30% 70% / 0.3);
-    --shadow-card: 0 10px 30px hsl(45 20% 70% / 0.2);
+    --shadow-glow: 0 0 30px hsl(45 95% 45% / 0.4);
+    --shadow-cyan-glow: 0 0 20px hsl(320 60% 50% / 0.3);
+    --shadow-card: 0 10px 30px hsl(230 20% 60% / 0.2);
     
     /* Animations */
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
