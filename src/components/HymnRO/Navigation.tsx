@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Crown, Download, Users, Trophy, DollarSign, MessageSquare, LogIn } from "lucide-react";
+import { Link } from "react-router-dom";
 import ThemeSwitcher from "./ThemeSwitcher";
 
 const Navigation = () => {
@@ -25,26 +26,36 @@ const Navigation = () => {
 
           {/* Navigation Menu */}
           <div className="hidden lg:flex items-center space-x-1">
-            <Button variant="ghost" size="sm" className="nav-item">
-              <Crown className="w-4 h-4 mr-2" />
-              Home
-            </Button>
-            <Button variant="ghost" size="sm" className="nav-item">
-              <Download className="w-4 h-4 mr-2" />
-              Download
-            </Button>
-            <Button variant="ghost" size="sm" className="nav-item">
-              <Users className="w-4 h-4 mr-2" />
-              Register
-            </Button>
-            <Button variant="ghost" size="sm" className="nav-item">
-              <Trophy className="w-4 h-4 mr-2" />
-              Rankings
-            </Button>
-            <Button variant="celestial" size="sm" className="nav-item-special">
-              <DollarSign className="w-4 h-4 mr-2" />
-              Donate
-            </Button>
+            <Link to="/">
+              <Button variant="ghost" size="sm" className="nav-item">
+                <Crown className="w-4 h-4 mr-2" />
+                Home
+              </Button>
+            </Link>
+            <Link to="/download">
+              <Button variant="ghost" size="sm" className="nav-item">
+                <Download className="w-4 h-4 mr-2" />
+                Download
+              </Button>
+            </Link>
+            <Link to="/register">
+              <Button variant="ghost" size="sm" className="nav-item">
+                <Users className="w-4 h-4 mr-2" />
+                Register
+              </Button>
+            </Link>
+            <Link to="/rankings">
+              <Button variant="ghost" size="sm" className="nav-item">
+                <Trophy className="w-4 h-4 mr-2" />
+                Rankings
+              </Button>
+            </Link>
+            <Link to="/shop">
+              <Button variant="celestial" size="sm" className="nav-item-special">
+                <DollarSign className="w-4 h-4 mr-2" />
+                Donate
+              </Button>
+            </Link>
             <Button variant="ghost" size="sm" className="nav-item">
               <MessageSquare className="w-4 h-4 mr-2" />
               Forum
@@ -54,10 +65,12 @@ const Navigation = () => {
           {/* Login Section */}
           <div className="flex items-center space-x-3">
             <ThemeSwitcher />
-            <Button variant="hero" size="sm" className="hidden md:flex items-center">
-              <LogIn className="w-4 h-4 mr-2" />
-              Login
-            </Button>
+            <Link to="/login">
+              <Button variant="hero" size="sm" className="hidden md:flex items-center">
+                <LogIn className="w-4 h-4 mr-2" />
+                Login
+              </Button>
+            </Link>
             
             {/* Mobile Menu Button */}
             <Button variant="ghost" size="sm" className="lg:hidden">
