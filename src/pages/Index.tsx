@@ -2,6 +2,7 @@ import Layout from "@/components/HymnRO/Layout";
 import HeroSection from "@/components/HymnRO/HeroSection";
 import InfoCards from "@/components/HymnRO/InfoCards";
 import NewsSection from "@/components/HymnRO/NewsSection";
+import SetupTestUsers from "@/components/SetupTestUsers";
 import Sidebar from "@/components/HymnRO/Sidebar";
 
 const Index = () => {
@@ -13,6 +14,13 @@ const Index = () => {
       {/* Info Cards */}
       <InfoCards />
       
+      {/* Test Users Setup */}
+      <section className="py-16 px-4 bg-muted/30">
+        <div className="container mx-auto flex justify-center">
+          <SetupTestUsers />
+        </div>
+      </section>
+
       {/* Main Content Grid */}
       <div className="container mx-auto px-4 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

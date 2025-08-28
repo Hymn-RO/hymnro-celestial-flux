@@ -6,10 +6,84 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
 import { LogIn, UserPlus, Lock, Mail, Eye, EyeOff } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
+import { Navigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const { signIn, user, userProfile } = useAuth();
+  const { toast } = useToast();
+
+  const handleSignIn = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    
+    try {
+      const { error } = await signIn(email, password);
+      
+      if (error) {
+        toast({
+          title: "Login Failed",
+          description: error.message,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Welcome back!",
+          description: "Successfully signed in to your account.",
+        });
+      }
+    } catch (err) {
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Quick login buttons for testing
+  const quickLogin = async (testEmail: string, testPassword: string) => {
+    setEmail(testEmail);
+    setPassword(testPassword);
+    
+    setLoading(true);
+    try {
+      const { error } = await signIn(testEmail, testPassword);
+      
+      if (error) {
+        toast({
+          title: "Login Failed", 
+          description: error.message,
+          variant: "destructive",
+        });
+      }
+    } catch (err) {
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Redirect based on user role
+  if (user && userProfile) {
+    if (userProfile.role === 'admin') {
+      return <Navigate to="/admin-panel" replace />;
+    } else {
+      return <Navigate to="/user-panel" replace />;
+    }
+  }
 
   return (
     <Layout>
@@ -47,60 +121,122 @@ const LoginPage = () => {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="space-y-2">
-                <Label htmlFor="username">Username or Email</Label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <Input 
-                    id="username" 
-                    placeholder="Enter your username or email" 
-                    className="pl-10"
-                  />
+              <form onSubmit={handleSignIn} className="space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="username">Email</Label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <Input 
+                      id="username" 
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Enter your email" 
+                      className="pl-10"
+                      required
+                    />
+                  </div>
                 </div>
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <Input 
-                    id="password" 
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Enter your password" 
-                    className="pl-10 pr-10"
-                  />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? (
-                      <EyeOff className="h-4 w-4 text-muted-foreground" />
-                    ) : (
-                      <Eye className="h-4 w-4 text-muted-foreground" />
-                    )}
+                
+                <div className="space-y-2">
+                  <Label htmlFor="password">Password</Label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <Input 
+                      id="password" 
+                      type={showPassword ? "text" : "password"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Enter your password" 
+                      className="pl-10 pr-10"
+                      required
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? (
+                        <EyeOff className="h-4 w-4 text-muted-foreground" />
+                      ) : (
+                        <Eye className="h-4 w-4 text-muted-foreground" />
+                      )}
+                    </Button>
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox id="remember" />
+                    <Label htmlFor="remember" className="text-sm">
+                      Remember me
+                    </Label>
+                  </div>
+                  <Button type="button" variant="link" className="text-sm text-hymn-gold hover:text-hymn-glow-gold">
+                    Forgot password?
                   </Button>
                 </div>
-              </div>
-              
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="remember" />
-                  <Label htmlFor="remember" className="text-sm">
-                    Remember me
-                  </Label>
-                </div>
-                <Button variant="link" className="text-sm text-hymn-gold hover:text-hymn-glow-gold">
-                  Forgot password?
+                
+                <Button type="submit" className="w-full" size="lg" disabled={loading}>
+                  <LogIn className="w-4 h-4 mr-2" />
+                  {loading ? 'Signing In...' : 'Sign In'}
                 </Button>
-              </div>
+              </form>
               
-              <Button className="w-full" size="lg">
-                <LogIn className="w-4 h-4 mr-2" />
-                Sign In
-              </Button>
+              {/* Test Login Buttons */}
+              <div className="space-y-3">
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <Separator className="w-full" />
+                  </div>
+                  <div className="relative flex justify-center text-xs uppercase">
+                    <span className="bg-card px-2 text-muted-foreground">Quick Test Login</span>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-1 gap-2">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => quickLogin('admin@hymnro.com', 'admin123')}
+                    disabled={loading}
+                    className="text-red-600 border-red-200"
+                  >
+                    🔴 Login as Admin (admin@hymnro.com)
+                  </Button>
+                  <div className="grid grid-cols-3 gap-2">
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => quickLogin('user1@hymnro.com', 'user123')}
+                      disabled={loading}
+                      className="text-blue-600 border-blue-200"
+                    >
+                      User1
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => quickLogin('user2@hymnro.com', 'user123')}
+                      disabled={loading}
+                      className="text-blue-600 border-blue-200"
+                    >
+                      User2
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => quickLogin('user3@hymnro.com', 'user123')}
+                      disabled={loading}
+                      className="text-blue-600 border-blue-200"
+                    >
+                      User3
+                    </Button>
+                  </div>
+                </div>
+              </div>
               
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
@@ -112,7 +248,7 @@ const LoginPage = () => {
               </div>
               
               <div className="grid grid-cols-2 gap-4">
-                <Button variant="outline" size="sm">
+                <Button variant="outline" size="sm" disabled>
                   <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                     <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -121,7 +257,7 @@ const LoginPage = () => {
                   </svg>
                   Google
                 </Button>
-                <Button variant="outline" size="sm">
+                <Button variant="outline" size="sm" disabled>
                   <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                   </svg>
@@ -147,9 +283,9 @@ const LoginPage = () => {
               <div className="flex items-start space-x-3">
                 <Lock className="w-5 h-5 text-hymn-cyan mt-0.5" />
                 <div>
-                  <h4 className="font-semibold text-sm">Security Notice</h4>
+                  <h4 className="font-semibold text-sm">Test Accounts Available</h4>
                   <p className="text-xs text-muted-foreground mt-1">
-                    Never share your login credentials with anyone. HymnRO staff will never ask for your password via email or Discord.
+                    Use the quick login buttons above to test the admin and user panels. Admin account has full access, while user accounts have limited permissions.
                   </p>
                 </div>
               </div>
