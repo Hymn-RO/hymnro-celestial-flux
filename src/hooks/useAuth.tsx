@@ -81,11 +81,39 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    return { error };
+    // Mock authentication for testing without database
+    const mockUsers = {
+      'admin@hymnro.com': { password: 'admin123', role: 'admin', username: 'Admin User' },
+      'user1@hymnro.com': { password: 'user123', role: 'user', username: 'User One' },
+      'user2@hymnro.com': { password: 'user123', role: 'user', username: 'User Two' },
+      'user3@hymnro.com': { password: 'user123', role: 'user', username: 'User Three' },
+    };
+
+    const mockUser = mockUsers[email as keyof typeof mockUsers];
+    
+    if (mockUser && mockUser.password === password) {
+      // Create mock user and session
+      const mockUserData = {
+        id: email.split('@')[0], // Use email prefix as ID
+        email: email,
+        user_metadata: { username: mockUser.username }
+      };
+      
+      const mockSession = {
+        user: mockUserData,
+        access_token: 'mock-token',
+        refresh_token: 'mock-refresh'
+      };
+
+      // Set mock data
+      setUser(mockUserData as any);
+      setSession(mockSession as any);
+      setUserProfile({ role: mockUser.role, username: mockUser.username });
+      
+      return { error: null };
+    } else {
+      return { error: { message: 'Invalid login credentials' } };
+    }
   };
 
   const signUp = async (email: string, password: string, username: string) => {
@@ -105,7 +133,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    // Mock sign out
+    setUser(null);
+    setSession(null);
+    setUserProfile(null);
   };
 
   const value = {
